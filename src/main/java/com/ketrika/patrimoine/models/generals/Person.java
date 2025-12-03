@@ -82,12 +82,26 @@ public class Person {
     liabilities.add(Objects.requireNonNull(liability, "liability cannot be null"));
   }
 
+  public void addLiabilities(Collection<? extends ILiability> liability) {
+    Objects.requireNonNull(liability, "liability cannot be null");
+    for (ILiability l : liability) {
+      addLiability(l);
+    }
+  }
+
   public List<ILiability> getLiabilities() {
     return Collections.unmodifiableList(new ArrayList<>(liabilities));
   }
 
   public void addParticipation(IParticipation participation) {
     participations.add(Objects.requireNonNull(participation, "participation cannot be null"));
+  }
+
+  public void addParticipations(Collection<? extends IParticipation> participation) {
+    Objects.requireNonNull(participation, "participation cannot be null");
+    for (IParticipation p : participation) {
+      addParticipation(p);
+    }
   }
 
   public List<IParticipation> getParticipations() {

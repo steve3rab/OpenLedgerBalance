@@ -16,7 +16,7 @@ public final class BankAccountAsset implements IAsset {
   private final String bic;
   private final String bankName;
   private final String accountHolder;
-  private final boolean jointAccount;
+  private final Boolean jointAccount;
   private final IValuation<BankAccountAsset> valuation;
   private final Instant createdAt;
   private final Instant openedAt;
@@ -32,7 +32,7 @@ public final class BankAccountAsset implements IAsset {
    * @throws NullPointerException if any argument is null
    */
   public BankAccountAsset(String name, String iban, IValuation<BankAccountAsset> valuation) {
-    this(name, iban, null, null, null, false, null, valuation, null, null);
+    this(name, iban, null, null, null, Boolean.FALSE, null, valuation, null, null);
   }
 
   /**
