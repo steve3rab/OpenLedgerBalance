@@ -17,7 +17,7 @@ import com.ketrika.patrimoine.models.participations.IParticipation;
 /**
  * Represents a person with financial data including assets, liabilities, and participations.
  */
-public class Person {
+public final class Person {
 
   private final String id;
   private final String firstName;
