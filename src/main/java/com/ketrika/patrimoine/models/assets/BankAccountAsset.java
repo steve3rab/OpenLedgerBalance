@@ -32,7 +32,7 @@ public final class BankAccountAsset implements IAsset {
    * @throws NullPointerException if any argument is null
    */
   public BankAccountAsset(String name, String iban, IValuation<BankAccountAsset> valuation) {
-    this(name, iban, null, null, null, Boolean.FALSE, null, valuation, null, null);
+    this(name, iban, null, null, null, Boolean.FALSE, null, null, null, valuation);
   }
 
   /**
@@ -45,13 +45,13 @@ public final class BankAccountAsset implements IAsset {
    * @param accountHolder name of the account holder
    * @param jointAccount whether the account is jointly owned
    * @param openedAt timestamp when the account was opened
-   * @param valuation that returns current balance
    * @param currency ISO-4217 currency
    * @param tags list of tags
+   * @param valuation that returns current balance
    * @throws NullPointerException if any argument is null
    */
-  public BankAccountAsset(String name, String iban, String bankName, String bic, String accountHolder, boolean jointAccount, Instant openedAt, IValuation<BankAccountAsset> valuation,
-      Currency currency, List<String> tags) {
+  public BankAccountAsset(String name, String iban, String bankName, String bic, String accountHolder, boolean jointAccount, Instant openedAt,
+      Currency currency, List<String> tags, IValuation<BankAccountAsset> valuation) {
     this.name = Objects.requireNonNull(name);
     this.iban = Objects.requireNonNull(iban);
     this.bankName = bankName;

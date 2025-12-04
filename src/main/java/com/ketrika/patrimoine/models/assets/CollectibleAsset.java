@@ -2,6 +2,8 @@ package com.ketrika.patrimoine.models.assets;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Currency;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -18,6 +20,8 @@ public final class CollectibleAsset implements IAsset {
   private final Integer editionNumber;
   private final Instant acquiredAt;
   private final BigDecimal purchasePrice;
+  private final Currency currency;
+  private final List<String> tags;
   private final IValuation<CollectibleAsset> valuation;
   private final Instant createdAt;
 
@@ -30,7 +34,7 @@ public final class CollectibleAsset implements IAsset {
    * @throws NullPointerException if any argument is null
    */
   public CollectibleAsset(String name, String category, IValuation<CollectibleAsset> valuation) {
-    this(name, category, null, null, null, null, null, null, null, null, valuation);
+    this(name, category, null, null, null, null, null, null, null, null, null, null, valuation);
   }
 
   /**
@@ -47,6 +51,8 @@ public final class CollectibleAsset implements IAsset {
       Integer editionNumber,
       Instant acquiredAt,
       BigDecimal purchasePrice,
+      Currency currency,
+      List<String> tags,
       IValuation<CollectibleAsset> valuation) {
     this.name = Objects.requireNonNull(name);
     this.category = Objects.requireNonNull(category);
@@ -57,6 +63,8 @@ public final class CollectibleAsset implements IAsset {
     this.editionNumber = editionNumber;
     this.acquiredAt = acquiredAt;
     this.purchasePrice = purchasePrice;
+    this.currency = currency;
+    this.tags = tags != null ? List.copyOf(tags) : null;
     this.valuation = Objects.requireNonNull(valuation);
     this.createdAt = Instant.now();
   }
@@ -99,6 +107,16 @@ public final class CollectibleAsset implements IAsset {
 
   public Instant getCreatedAt() {
     return createdAt;
+  }
+
+  @Override
+  public Currency currency() {
+    return currency != null ? currency : IAsset.super.currency();
+  }
+
+  @Override
+  public List<String> tags() {
+    return tags != null ? tags : IAsset.super.tags();
   }
 
   @Override
