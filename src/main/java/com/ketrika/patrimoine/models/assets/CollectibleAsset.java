@@ -11,6 +11,13 @@ public final class CollectibleAsset implements IAsset {
 
   private final String name;
   private final String category;
+  private final String manufacturer;
+  private final String model;
+  private final String serialNumber;
+  private final Boolean limitedEdition;
+  private final Integer editionNumber;
+  private final Instant acquiredAt;
+  private final BigDecimal purchasePrice;
   private final IValuation<CollectibleAsset> valuation;
   private final Instant createdAt;
 
@@ -23,10 +30,67 @@ public final class CollectibleAsset implements IAsset {
    * @throws NullPointerException if any argument is null
    */
   public CollectibleAsset(String name, String category, IValuation<CollectibleAsset> valuation) {
+    this(name, category, null, null, null, null, null, null, null, null, valuation);
+  }
+
+  /**
+   * Constructs a full CollectibleAsset with optional metadata.
+   */
+  public CollectibleAsset(
+      String name,
+      String category,
+      String manufacturer,
+      String model,
+      Integer year,
+      String serialNumber,
+      Boolean limitedEdition,
+      Integer editionNumber,
+      Instant acquiredAt,
+      BigDecimal purchasePrice,
+      IValuation<CollectibleAsset> valuation) {
     this.name = Objects.requireNonNull(name);
     this.category = Objects.requireNonNull(category);
+    this.manufacturer = manufacturer;
+    this.model = model;
+    this.serialNumber = serialNumber;
+    this.limitedEdition = limitedEdition;
+    this.editionNumber = editionNumber;
+    this.acquiredAt = acquiredAt;
+    this.purchasePrice = purchasePrice;
     this.valuation = Objects.requireNonNull(valuation);
     this.createdAt = Instant.now();
+  }
+
+  public String getManufacturer() {
+    return manufacturer;
+  }
+
+  public String getModel() {
+    return model;
+  }
+
+  public String getSerialNumber() {
+    return serialNumber;
+  }
+
+  public Boolean getLimitedEdition() {
+    return limitedEdition;
+  }
+
+  public Integer getEditionNumber() {
+    return editionNumber;
+  }
+
+  public Instant getAcquiredAt() {
+    return acquiredAt;
+  }
+
+  public BigDecimal getPurchasePrice() {
+    return purchasePrice;
+  }
+
+  public IValuation<CollectibleAsset> getValuation() {
+    return valuation;
   }
 
   public String getCategory() {
