@@ -2,6 +2,8 @@ package com.ketrika.patrimoine.models.assets;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Currency;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -12,6 +14,8 @@ public final class PreciousMetalAsset implements IAsset {
   private final String name;
   private final BigDecimal weightInGrams;
   private final IValuation<PreciousMetalAsset> valuation;
+  private final Currency currency;
+  private final List<String> tags;
   private final Instant createdAt;
 
   /**
@@ -23,9 +27,23 @@ public final class PreciousMetalAsset implements IAsset {
    * @throws NullPointerException if any argument is null
    */
   public PreciousMetalAsset(String name, BigDecimal weightInGrams, IValuation<PreciousMetalAsset> valuation) {
+    this(name, weightInGrams, null, null, valuation);
+  }
+
+  /**
+   * Full constructor including optional metadata.
+   */
+  public PreciousMetalAsset(
+      String name,
+      BigDecimal weightInGrams,
+      Currency currency,
+      List<String> tags,
+      IValuation<PreciousMetalAsset> valuation) {
     this.name = Objects.requireNonNull(name);
     this.weightInGrams = Objects.requireNonNull(weightInGrams);
     this.valuation = Objects.requireNonNull(valuation);
+    this.currency = currency;
+    this.tags = tags != null ? List.copyOf(tags) : null;
     this.createdAt = Instant.now();
   }
 
@@ -35,6 +53,16 @@ public final class PreciousMetalAsset implements IAsset {
 
   public Instant getCreatedAt() {
     return createdAt;
+  }
+
+  @Override
+  public Currency currency() {
+    return currency != null ? currency : IAsset.super.currency();
+  }
+
+  @Override
+  public List<String> tags() {
+    return tags != null ? tags : IAsset.super.tags();
   }
 
   @Override
