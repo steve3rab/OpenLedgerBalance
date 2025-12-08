@@ -3,7 +3,9 @@ package patrimoinecom.ketrika.patrimoine.models.assets;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Currency;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,8 +14,10 @@ import com.ketrika.patrimoine.models.assets.CollectibleAsset;
 import com.ketrika.patrimoine.models.assets.CryptoAsset;
 import com.ketrika.patrimoine.models.assets.FixedValuation;
 import com.ketrika.patrimoine.models.assets.MultiplicativeValuation;
+import com.ketrika.patrimoine.models.assets.RealEstateAsset;
 import com.ketrika.patrimoine.models.assets.TrustBeneficiaryAsset;
 import com.ketrika.patrimoine.models.assets.TrustBeneficiaryValuation;
+import com.ketrika.patrimoine.models.assets.VehicleAsset;
 import com.ketrika.patrimoine.models.generals.Address;
 import com.ketrika.patrimoine.models.generals.AssetsCalculation;
 import com.ketrika.patrimoine.models.generals.Birth;
@@ -28,6 +32,8 @@ class AssetsIT {
   private CollectibleAsset collectible;
   private CryptoAsset crypto;
   private TrustBeneficiaryAsset trust;
+  private RealEstateAsset realEstate;
+  private VehicleAsset vehicle;
 
   @BeforeEach
   void setUp() {
@@ -88,7 +94,40 @@ class AssetsIT {
         .valuation(new TrustBeneficiaryValuation(BigDecimal.valueOf(0.05)))
         .build();
 
-    person.addAssets(List.of(bank, collectible, crypto, trust));
+    // RealEstateAsset
+    realEstate = new RealEstateAsset.Builder()
+        .name("Primary Residence")
+        .address("Lot II M 123 - Antehiroka")
+        .propertyType("Residential")
+        .landAreaSqM(BigDecimal.valueOf(500))
+        .buildingAreaSqM(BigDecimal.valueOf(220))
+        .yearBuilt(2010)
+        .currency(Currency.getInstance("USD"))
+        .tags(List.of("house", "main-home"))
+        .valuation(new FixedValuation<>(BigDecimal.valueOf(150_000)))
+        .build();
+
+    // VehicleAsset
+    vehicle = new VehicleAsset.Builder()
+        .name("Toyota Hilux")
+        .registration("ABC-1234")
+        .manufacturer("Toyota")
+        .model("Hilux")
+        .year(2018)
+        .fuelType("Diesel")
+        .transmission("Automatic")
+        .horsepower(150)
+        .seatingCapacity(5)
+        .purchasePrice(BigDecimal.valueOf(35000))
+        .purchaseDate(Instant.parse("2019-01-01T00:00:00Z"))
+        .odometerKm(85000)
+        .usageType("Personal")
+        .currency(Currency.getInstance("USD"))
+        .tags(List.of("4x4", "pickup"))
+        .valuation(new FixedValuation<>(BigDecimal.valueOf(25000)))
+        .build();
+
+    person.addAssets(List.of(bank, collectible, crypto, trust, realEstate, vehicle));
   }
 
   // ---------------------------------------------------------
@@ -138,6 +177,16 @@ class AssetsIT {
     assertTrue(trust.value().compareTo(expected) == 0);
   }
 
+  @Test
+  void testRealEstateValue() {
+    assertEquals(BigDecimal.valueOf(150_000), realEstate.value());
+  }
+
+  @Test
+  void testVehicleValue() {
+    assertEquals(BigDecimal.valueOf(25000), vehicle.value());
+  }
+
   // ---------------------------------------------------------
   // TOTAL ASSETS CALCULATION
   // ---------------------------------------------------------
@@ -149,7 +198,9 @@ class AssetsIT {
     BigDecimal expected = bank.value()
         .add(collectible.value())
         .add(crypto.value())
-        .add(trust.value());
+        .add(trust.value())
+        .add(realEstate.value())
+        .add(vehicle.value());
 
     assertEquals(expected, total);
   }
