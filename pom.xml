@@ -133,6 +133,24 @@
 				</configuration>
 			</plugin>
 
+			<!-- Formatter plugin -->
+			<plugin>
+				<groupId>com.cosium.code</groupId>
+				<artifactId>git-code-format-maven-plugin</artifactId>
+				<version>${git-code-format-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>pre-commit-formatter</id>
+						<goals>
+							<goal>on-pre-commit</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
+				</configuration>
+			</plugin>
+
 			<!-- Surefire plugin for unit tests -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
