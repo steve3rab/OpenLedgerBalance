@@ -140,6 +140,12 @@
 				<version>${git-code-format-maven-plugin.version}</version>
 				<executions>
 					<execution>
+						<id>pre-format-code</id>
+						<goals>
+							<goal>format-code</goal>
+						</goals>
+					</execution>
+					<execution>
 						<id>pre-commit-formatter</id>
 						<goals>
 							<goal>on-pre-commit</goal>
@@ -148,6 +154,7 @@
 				</executions>
 				<configuration>
 					<sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
+					<preCommitHookPipeline>&gt;/dev/null</preCommitHookPipeline>
 				</configuration>
 			</plugin>
 
