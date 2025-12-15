@@ -6,7 +6,7 @@
 	<artifactId>patrimoine</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>Simulateur de Patrimoine</name>
+	<name>Patrimony</name>
 
 	<packaging>jar</packaging>
 
