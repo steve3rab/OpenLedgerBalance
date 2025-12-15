@@ -278,5 +278,6 @@
 
 	<modules>
 		<module>patrimony</module>
+		<module>expenseincome</module>
 	</modules>
 </project>
