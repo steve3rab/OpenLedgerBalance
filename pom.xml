@@ -3,12 +3,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ketrika</groupId>
-	<artifactId>patrimoine</artifactId>
+	<artifactId>openledgerbalance</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>Patrimony</name>
+	<name>Open Ledger Balance</name>
 
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 
 	<url />
 
@@ -55,9 +55,6 @@
 		<log.version>2.23.1</log.version>
 		<eclipse.annot.version>2.3.0</eclipse.annot.version>
 
-		<json.version>3.0.3</json.version>
-		<picocli.version>4.7.7</picocli.version>
-
 		<git-code-format-maven-plugin.version>5.4</git-code-format-maven-plugin.version>
 
 		<maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
@@ -94,18 +91,6 @@
 			<groupId>org.eclipse.jdt</groupId>
 			<artifactId>org.eclipse.jdt.annotation</artifactId>
 			<version>${eclipse.annot.version}</version>
-		</dependency>
-		<!-- Jackson-databind -->
-		<dependency>
-			<groupId>tools.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>${json.version}</version>
-		</dependency>
-		<!-- Picocli -->
-		<dependency>
-			<groupId>info.picocli</groupId>
-			<artifactId>picocli</artifactId>
-			<version>${picocli.version}</version>
 		</dependency>
 		<!-- Cosium formatter -->
 		<dependency>
@@ -291,4 +276,7 @@
 		</plugins>
 	</reporting>
 
+	<modules>
+		<module>patrimony</module>
+	</modules>
 </project>

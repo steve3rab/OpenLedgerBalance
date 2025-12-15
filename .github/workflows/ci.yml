@@ -22,20 +22,24 @@ jobs:
         cache: 'maven'
 
     - name: Build project
+      working-directory: patrimony
       run: mvn -B clean compile
       
     - name: Run tests
+      working-directory: patrimony
       run: mvn -B test
       continue-on-error: false
 
     - name: Generate Javadoc
+      working-directory: patrimony
       run: mvn javadoc:javadoc
       
     - name: Package JAR
+      working-directory: patrimony
       run: mvn -B package -DskipTests
       
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: app-jar
-        path: target/*.jar
+        name: patrimony-jar
+        path: patrimony/target/*.jar
