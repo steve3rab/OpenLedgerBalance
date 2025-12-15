@@ -12,14 +12,14 @@ import java.util.Objects;
 public final class LoanLiability implements ILiability {
 
   private final String description;
-  private final BigDecimal outstanding;
   private final Currency currency;
   private final List<String> tags;
+  private final IValuation<LoanLiability> valuation;
   private final Instant createdAt;
 
   private LoanLiability(Builder builder) {
     this.description = Objects.requireNonNull(builder.description);
-    this.outstanding = Objects.requireNonNull(builder.outstanding);
+    this.valuation = Objects.requireNonNull(builder.valuation);
     this.currency = builder.currency;
     this.tags = builder.tags != null ? List.copyOf(builder.tags) : null;
     this.createdAt = Instant.now();
@@ -35,7 +35,7 @@ public final class LoanLiability implements ILiability {
 
   @Override
   public BigDecimal amount() {
-    return outstanding;
+    return valuation.calculate(this);
   }
 
   @Override
@@ -55,19 +55,14 @@ public final class LoanLiability implements ILiability {
 
   public static final class Builder {
     private String description;
-    private BigDecimal outstanding;
     private Currency currency;
     private List<String> tags;
+    private IValuation<LoanLiability> valuation;
 
     private Builder() {}
 
     public Builder description(String description) {
       this.description = description;
-      return this;
-    }
-
-    public Builder outstanding(BigDecimal outstanding) {
-      this.outstanding = outstanding;
       return this;
     }
 
@@ -78,6 +73,11 @@ public final class LoanLiability implements ILiability {
 
     public Builder tags(List<String> tags) {
       this.tags = tags;
+      return this;
+    }
+
+    public Builder valuation(IValuation<LoanLiability> valuation) {
+      this.valuation = valuation;
       return this;
     }
 

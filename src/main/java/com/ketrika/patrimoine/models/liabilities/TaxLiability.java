@@ -13,16 +13,16 @@ import java.util.Objects;
 public final class TaxLiability implements ILiability {
 
   private final String description;
-  private final BigDecimal unpaidAmount;
   private final LocalDate dueDate;
   private final Currency currency;
   private final List<String> tags;
+  private final IValuation<TaxLiability> valuation;
   private final Instant createdAt;
 
   private TaxLiability(Builder builder) {
     this.description = Objects.requireNonNull(builder.description);
-    this.unpaidAmount = Objects.requireNonNull(builder.unpaidAmount);
     this.dueDate = Objects.requireNonNull(builder.dueDate);
+    this.valuation = Objects.requireNonNull(builder.valuation);
     this.currency = builder.currency;
     this.tags = builder.tags != null ? List.copyOf(builder.tags) : null;
     this.createdAt = Instant.now();
@@ -42,7 +42,7 @@ public final class TaxLiability implements ILiability {
 
   @Override
   public BigDecimal amount() {
-    return unpaidAmount;
+    return valuation.calculate(this);
   }
 
   @Override
@@ -62,20 +62,15 @@ public final class TaxLiability implements ILiability {
 
   public static final class Builder {
     private String description;
-    private BigDecimal unpaidAmount;
     private LocalDate dueDate;
     private Currency currency;
     private List<String> tags;
+    private IValuation<TaxLiability> valuation;
 
     private Builder() {}
 
     public Builder description(String description) {
       this.description = description;
-      return this;
-    }
-
-    public Builder unpaidAmount(BigDecimal unpaidAmount) {
-      this.unpaidAmount = unpaidAmount;
       return this;
     }
 
@@ -91,6 +86,11 @@ public final class TaxLiability implements ILiability {
 
     public Builder tags(List<String> tags) {
       this.tags = tags;
+      return this;
+    }
+
+    public Builder valuation(IValuation<TaxLiability> valuation) {
+      this.valuation = valuation;
       return this;
     }
 

@@ -12,14 +12,14 @@ import java.util.Objects;
 public final class GeneralLiability implements ILiability {
 
   private final String description;
-  private final BigDecimal amount;
   private final Currency currency;
   private final List<String> tags;
+  private final IValuation<GeneralLiability> valuation;
   private final Instant createdAt;
 
   private GeneralLiability(Builder builder) {
     this.description = Objects.requireNonNull(builder.description);
-    this.amount = Objects.requireNonNull(builder.amount);
+    this.valuation = Objects.requireNonNull(builder.valuation);
     this.currency = builder.currency;
     this.tags = builder.tags != null ? List.copyOf(builder.tags) : null;
     this.createdAt = Instant.now();
@@ -35,7 +35,7 @@ public final class GeneralLiability implements ILiability {
 
   @Override
   public BigDecimal amount() {
-    return amount;
+    return valuation.calculate(this);
   }
 
   @Override
@@ -55,19 +55,14 @@ public final class GeneralLiability implements ILiability {
 
   public static final class Builder {
     private String description;
-    private BigDecimal amount;
     private Currency currency;
     private List<String> tags;
+    private IValuation<GeneralLiability> valuation;
 
     private Builder() {}
 
     public Builder description(String description) {
       this.description = description;
-      return this;
-    }
-
-    public Builder amount(BigDecimal amount) {
-      this.amount = amount;
       return this;
     }
 
@@ -78,6 +73,11 @@ public final class GeneralLiability implements ILiability {
 
     public Builder tags(List<String> tags) {
       this.tags = tags;
+      return this;
+    }
+
+    public Builder valuation(IValuation<GeneralLiability> valuation) {
+      this.valuation = valuation;
       return this;
     }
 
