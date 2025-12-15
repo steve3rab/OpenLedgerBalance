@@ -279,5 +279,6 @@
 	<modules>
 		<module>patrimony</module>
 		<module>expenseincome</module>
+		<module>ledgerview</module>
 	</modules>
 </project>
