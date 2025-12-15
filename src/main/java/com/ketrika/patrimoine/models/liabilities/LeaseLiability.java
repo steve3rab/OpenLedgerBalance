@@ -13,17 +13,14 @@ public final class LeaseLiability implements ILiability {
   private final BigDecimal remainingPayments;
   private final Instant createdAt;
 
-  /**
-   * Constructs a new LeaseLiability.
-   * 
-   * @param description
-   * @param remainingPayments
-   * @throws NullPointerException if any argument is null
-   */
-  public LeaseLiability(String description, BigDecimal remainingPayments) {
-    this.description = Objects.requireNonNull(description);
-    this.remainingPayments = Objects.requireNonNull(remainingPayments);
+  private LeaseLiability(Builder builder) {
+    this.description = Objects.requireNonNull(builder.description);
+    this.remainingPayments = Objects.requireNonNull(builder.remainingPayments);
     this.createdAt = Instant.now();
+  }
+
+  public static Builder builder() {
+    return new Builder();
   }
 
   public Instant getCreatedAt() {
@@ -38,5 +35,26 @@ public final class LeaseLiability implements ILiability {
   @Override
   public String description() {
     return description;
+  }
+
+  public static final class Builder {
+    private String description;
+    private BigDecimal remainingPayments;
+
+    private Builder() {}
+
+    public Builder description(String description) {
+      this.description = description;
+      return this;
+    }
+
+    public Builder remainingPayments(BigDecimal remainingPayments) {
+      this.remainingPayments = remainingPayments;
+      return this;
+    }
+
+    public LeaseLiability build() {
+      return new LeaseLiability(this);
+    }
   }
 }

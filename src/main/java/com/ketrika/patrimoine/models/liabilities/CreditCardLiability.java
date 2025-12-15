@@ -13,17 +13,14 @@ public final class CreditCardLiability implements ILiability {
   private final BigDecimal balance;
   private final Instant createdAt;
 
-  /**
-   * Constructs a new CreditCardLiability.
-   * 
-   * @param description
-   * @param balance
-   * @throws NullPointerException if any argument is null
-   */
-  public CreditCardLiability(String description, BigDecimal balance) {
-    this.description = Objects.requireNonNull(description);
-    this.balance = Objects.requireNonNull(balance);
+  private CreditCardLiability(Builder builder) {
+    this.description = Objects.requireNonNull(builder.description);
+    this.balance = Objects.requireNonNull(builder.balance);
     this.createdAt = Instant.now();
+  }
+
+  public static Builder builder() {
+    return new Builder();
   }
 
   public Instant getCreatedAt() {
@@ -38,5 +35,26 @@ public final class CreditCardLiability implements ILiability {
   @Override
   public String description() {
     return description;
+  }
+
+  public static final class Builder {
+    private String description;
+    private BigDecimal balance;
+
+    private Builder() {}
+
+    public Builder description(String description) {
+      this.description = description;
+      return this;
+    }
+
+    public Builder balance(BigDecimal balance) {
+      this.balance = balance;
+      return this;
+    }
+
+    public CreditCardLiability build() {
+      return new CreditCardLiability(this);
+    }
   }
 }

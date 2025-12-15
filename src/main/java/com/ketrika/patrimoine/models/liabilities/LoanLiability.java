@@ -13,17 +13,14 @@ public final class LoanLiability implements ILiability {
   private final BigDecimal outstanding;
   private final Instant createdAt;
 
-  /**
-   * Constructs a new LoanLiability.
-   * 
-   * @param description
-   * @param outstanding
-   * @throws NullPointerException if any argument is null
-   */
-  public LoanLiability(String description, BigDecimal outstanding) {
-    this.description = Objects.requireNonNull(description);
-    this.outstanding = Objects.requireNonNull(outstanding);
+  private LoanLiability(Builder builder) {
+    this.description = Objects.requireNonNull(builder.description);
+    this.outstanding = Objects.requireNonNull(builder.outstanding);
     this.createdAt = Instant.now();
+  }
+
+  public static Builder builder() {
+    return new Builder();
   }
 
   public Instant getCreatedAt() {
@@ -38,5 +35,26 @@ public final class LoanLiability implements ILiability {
   @Override
   public String description() {
     return description;
+  }
+
+  public static final class Builder {
+    private String description;
+    private BigDecimal outstanding;
+
+    private Builder() {}
+
+    public Builder description(String description) {
+      this.description = description;
+      return this;
+    }
+
+    public Builder outstanding(BigDecimal outstanding) {
+      this.outstanding = outstanding;
+      return this;
+    }
+
+    public LoanLiability build() {
+      return new LoanLiability(this);
+    }
   }
 }

@@ -15,19 +15,15 @@ public final class TaxLiability implements ILiability {
   private final LocalDate dueDate;
   private final Instant createdAt;
 
-  /**
-   * Constructs a new TaxLiability.
-   * 
-   * @param description
-   * @param unpaidAmount
-   * @param dueDate
-   * @throws NullPointerException if any argument is null
-   */
-  public TaxLiability(String description, BigDecimal unpaidAmount, LocalDate dueDate) {
-    this.description = Objects.requireNonNull(description);
-    this.unpaidAmount = Objects.requireNonNull(unpaidAmount);
-    this.dueDate = Objects.requireNonNull(dueDate);
+  private TaxLiability(Builder builder) {
+    this.description = Objects.requireNonNull(builder.description);
+    this.unpaidAmount = Objects.requireNonNull(builder.unpaidAmount);
+    this.dueDate = Objects.requireNonNull(builder.dueDate);
     this.createdAt = Instant.now();
+  }
+
+  public static Builder builder() {
+    return new Builder();
   }
 
   public Instant getCreatedAt() {
@@ -46,5 +42,32 @@ public final class TaxLiability implements ILiability {
   @Override
   public String description() {
     return description;
+  }
+
+  public static final class Builder {
+    private String description;
+    private BigDecimal unpaidAmount;
+    private LocalDate dueDate;
+
+    private Builder() {}
+
+    public Builder description(String description) {
+      this.description = description;
+      return this;
+    }
+
+    public Builder unpaidAmount(BigDecimal unpaidAmount) {
+      this.unpaidAmount = unpaidAmount;
+      return this;
+    }
+
+    public Builder dueDate(LocalDate dueDate) {
+      this.dueDate = dueDate;
+      return this;
+    }
+
+    public TaxLiability build() {
+      return new TaxLiability(this);
+    }
   }
 }
