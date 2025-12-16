@@ -1,5 +1,8 @@
 package com.ketrika.ledgerview.views;
 
+import com.ketrika.ledgerview.models.ConfirmationDialogModel;
+import com.ketrika.ledgerview.presenters.ConfirmationDialogPresenter;
+import com.ketrika.ledgerview.utils.TaskExecutor;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Application;
@@ -24,6 +27,7 @@ import javafx.stage.Stage;
 public class MainView extends Application {
 
   private static final String TITLE = "Open Ledger Balance";
+  private static final String CONFIRM_ACTION = "Confirm Action";
 
   private static final double WINDOW_WIDTH = 900d;
   private static final double WINDOW_HEIGHT = 700d;
@@ -31,11 +35,18 @@ public class MainView extends Application {
   private ConfirmationDialogView confirmationDialog;
 
   private Stage primaryStage;
+  private TaskExecutor taskExecutor;
+
+  @Override
+  public void init() {
+    taskExecutor = new TaskExecutor();
+  }
 
   @Override
   public void start(Stage primaryStage) throws Exception {
     this.primaryStage = primaryStage;
     initializeStage();
+    createDialogs();
   }
 
   private void initializeStage() {
@@ -56,6 +67,11 @@ public class MainView extends Application {
     });
 
     primaryStage.show();
+  }
+
+  private void createDialogs() {
+    confirmationDialog = new ConfirmationDialogView(primaryStage, CONFIRM_ACTION,
+        new ConfirmationDialogPresenter(new ConfirmationDialogModel("Are you sure you want to proceed?")));
   }
 
   /**

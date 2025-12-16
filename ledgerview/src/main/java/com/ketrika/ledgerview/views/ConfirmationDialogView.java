@@ -33,11 +33,12 @@ public class ConfirmationDialogView extends ADialogView {
     FontAwesomeIconView icon = new FontAwesomeIconView(FontAwesomeIcon.INFO_CIRCLE);
     icon.getStyleClass().add("custom-icon");
 
-    var contentBox = new HBox(10, messageLabel);
+    var contentBox = new HBox(10);
     contentBox.setPadding(new Insets(10));
 
     setContent(contentBox);
 
+    messageLabel = new Label();
     presenter.initViewContent(icon, messageLabel);
 
     // Configure the OK buttons via the presenter
