@@ -121,7 +121,7 @@ public class MainView extends Application {
     FontAwesomeIconView icon = new FontAwesomeIconView(iconType);
     icon.setGlyphSize(16);
 
-    Button button = new Button(text, icon);
+    var button = new Button(text, icon);
     button.getStyleClass().add("toolbar-button");
     button.setContentDisplay(ContentDisplay.LEFT);
     button.setGraphicTextGap(6);

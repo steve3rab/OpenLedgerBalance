@@ -28,12 +28,10 @@ public class ConfirmationDialogView extends ADialogView {
    * Initializes the UI components of the confirmation dialog.
    */
   public void initializeComponents() {
-    FontAwesomeIconView icon = new FontAwesomeIconView(FontAwesomeIcon.INFO_CIRCLE);
+    var icon = new FontAwesomeIconView(FontAwesomeIcon.INFO_CIRCLE);
     icon.getStyleClass().add("custom-icon");
 
-    Label messageLabel = new Label(presenter.getMessage());
-
-    var contentBox = new HBox(10, icon, messageLabel);
+    var contentBox = new HBox(10, icon, new Label(presenter.getMessage()));
     contentBox.setPadding(new Insets(10));
 
     setContent(contentBox);
