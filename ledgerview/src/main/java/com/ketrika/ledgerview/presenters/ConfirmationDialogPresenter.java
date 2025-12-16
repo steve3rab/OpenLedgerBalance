@@ -2,8 +2,6 @@ package com.ketrika.ledgerview.presenters;
 
 import com.ketrika.ledgerview.models.ConfirmationDialogModel;
 import com.ketrika.ledgerview.views.ConfirmationDialogView;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import javafx.scene.control.Label;
 
 /**
  * Presenter for the ConfirmationDialog, handling the business logic and updating the view.
@@ -32,25 +30,10 @@ public class ConfirmationDialogPresenter {
   }
 
   /**
-   * Initializes the view with data from the model.
-   */
-  public void initViewContent(FontAwesomeIconView icon, Label messageLabel) {
-    messageLabel.setText(model.getConfirmationQuestion());
-  }
-
-  /**
    * Handles the confirm button click action.
    */
   public void onConfirmButtonClicked() {
     model.setConfirmed(true);
-    view.close();
-  }
-
-  /**
-   * Handles the cancel button click action.
-   */
-  public void onCancelButtonClicked() {
-    model.setConfirmed(false);
     view.close();
   }
 
@@ -61,5 +44,14 @@ public class ConfirmationDialogPresenter {
    */
   public boolean isConfirmed() {
     return model.isConfirmed();
+  }
+
+  /**
+   * Get message
+   * 
+   * @return the dialog message
+   */
+  public String getMessage() {
+    return model.getConfirmationQuestion();
   }
 }

@@ -17,8 +17,6 @@ public class ConfirmationDialogView extends ADialogView {
   private static final String CONFIRM = "Confirm";
   private final ConfirmationDialogPresenter presenter;
 
-  private Label messageLabel;
-
   public ConfirmationDialogView(@NonNull Stage owner, @NonNull String title, ConfirmationDialogPresenter presenter) {
     super(owner, title);
     this.presenter = presenter;
@@ -33,26 +31,16 @@ public class ConfirmationDialogView extends ADialogView {
     FontAwesomeIconView icon = new FontAwesomeIconView(FontAwesomeIcon.INFO_CIRCLE);
     icon.getStyleClass().add("custom-icon");
 
-    var contentBox = new HBox(10);
+    Label messageLabel = new Label(presenter.getMessage());
+
+    var contentBox = new HBox(10, icon, messageLabel);
     contentBox.setPadding(new Insets(10));
 
     setContent(contentBox);
 
-    messageLabel = new Label();
-    presenter.initViewContent(icon, messageLabel);
-
     // Configure the OK buttons via the presenter
     getOkButton().setText(CONFIRM);
     getOkButton().setOnAction(event -> presenter.onConfirmButtonClicked());
-  }
-
-  /**
-   * Updates the confirmation question in the label.
-   *
-   * @param message the confirmation question to display
-   */
-  public void setConfirmationQuestion(String message) {
-    messageLabel.setText(message);
   }
 
   /**
